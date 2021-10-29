@@ -23,6 +23,7 @@ async function run() {
         const database = client.db('Travel_Agent');
         const placesCollection = database.collection('places');
         const usersCollection = database.collection('users');
+        const bookingCollection = database.collection('booking');
         console.log('database connection done');
 
         // get api
@@ -36,9 +37,15 @@ async function run() {
         app.get('/users', async (req, res) => {
             const cursor = usersCollection.find({});
             const users = await cursor.toArray();
-            console.log('user getted');
+            console.log('user geted');
             res.send(users);
+        })
 
+        app.get('/booking', async (req, res) => {
+            const cursor = bookingCollection.find({});
+            const booking = await cursor.toArray();
+            console.log('book found');
+            res.send(booking);
         })
 
         // get single item
@@ -67,6 +74,22 @@ async function run() {
                 res.json(result);
             }
 
+        })
+
+        app.post('/places', async (req, res) => {
+            const newPlace = req.body;
+            const result = await placesCollection.insertOne(newPlace);
+
+            console.log('added place', newPlace);
+            res.json(result);
+        })
+
+
+        app.post('/booking', async (req, res) => {
+            const booking = req.body;
+            const result = await bookingCollection.insertOne(booking);
+            console.log('booking added');
+            res.json(result);
         })
 
         // delete api
