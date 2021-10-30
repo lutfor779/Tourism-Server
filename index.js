@@ -92,6 +92,24 @@ async function run() {
             res.json(result);
         })
 
+        // Update api
+        app.put('/booking/:id', async (req, res) => {
+            const id = req.params.id;
+            const updateBooking = req.body;
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+
+            const updateDoc = {
+                $set: {
+                    status: updateBooking.status
+                },
+            };
+            const result = await bookingCollection.updateOne(filter, updateDoc, options);
+
+            console.log('updating booking', id);
+            res.json(result);
+        })
+
         // delete api
         app.delete('/users/:id', async (req, res) => {
             const id = req.params.id;
