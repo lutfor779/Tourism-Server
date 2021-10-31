@@ -24,6 +24,7 @@ async function run() {
         const placesCollection = database.collection('places');
         const usersCollection = database.collection('users');
         const bookingCollection = database.collection('booking');
+        const adminCollection = database.collection('admin');
         console.log('database connection done');
 
         // get api
@@ -37,7 +38,7 @@ async function run() {
         app.get('/users', async (req, res) => {
             const cursor = usersCollection.find({});
             const users = await cursor.toArray();
-            console.log('user geted');
+            console.log('user get ok');
             res.send(users);
         })
 
@@ -46,6 +47,13 @@ async function run() {
             const booking = await cursor.toArray();
             console.log('book found');
             res.send(booking);
+        })
+
+        app.get('/admin', async (req, res) => {
+            const cursor = adminCollection.find({});
+            const admin = await cursor.toArray();
+            console.log('admin found');
+            res.send(admin);
         })
 
         // get single item
