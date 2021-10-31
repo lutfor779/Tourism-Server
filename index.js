@@ -49,13 +49,13 @@ async function run() {
         })
 
         // get single item
-        app.get('/places/:id', async (req, res) => {
+        app.get('/booking/:id', async (req, res) => {
             const id = req.params.id;
-            console.log('getting specific place ', id, req.params);
+            console.log('getting specific booking ', id);
             const query = { _id: ObjectId(id) };
-            const place = await placesCollection.findOne(query);
+            const book = await placesCollection.findOne(query);
             console.log('single place getting done');
-            res.json(place);
+            res.json(book);
         })
 
 
